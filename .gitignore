@@ -1,3 +1,5 @@
+.DS_Store
+
 # Prerequisites
 *.d
 
@@ -31,8 +33,5 @@
 *.out
 *.app
 
-# Debug
-*.dSYM
-
 # Other
-.DS_Store
+/build
