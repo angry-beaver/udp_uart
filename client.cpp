@@ -17,7 +17,7 @@ int main() {
 
 	const int client_error = client.init(PORT, SERVER);
 	if (client_error != 0) {
-		std::cout << "Failed create udp client" << std::endl;
+		perror("Failed create udp client - ");
 		exit(1);
 	}
 	std::cout << "Client socket created" << std::endl;
@@ -27,8 +27,7 @@ int main() {
     char serial_error = serial.openDevice(SERIAL_PORT, BAUDS);
 
 	if (serial_error != 1) {
-		std::cout << "Failed open serial device - "<< SERIAL_PORT << std::endl;
-
+		perror("Failed open serial device - ");
 		exit(1);
 	}
 
@@ -47,7 +46,7 @@ int main() {
             	const int bytes_received = serial.readString(message, '\n', SIZE);
 
 				if (bytes_received < 0) {
-					std::cout << "Error while reading from " << SERIAL_PORT << std::endl;
+					perror("Error while reading - ");
 					continue;	
 				}
 				// remove '\n'
@@ -63,7 +62,7 @@ int main() {
 		/* send the string to the server */
 		int bytes_sent = client.send(message, strlen(message));
 		if ( bytes_sent == -1) {
-			std::cout << "Could not send to the server!" << std::endl;
+			perror("Could not send to the server");
 			continue;
 		}
 
@@ -71,7 +70,7 @@ int main() {
 		// try to receive some data, this is a blocking call
         int bytes_received = client.receive(answer, SIZE);;
 		if ( bytes_received == -1) {
-			std::cout << "Could not receive the message from the server!" << std::endl;
+			perror("Could not receive the message from the server - ");
 			continue;
 		} else {
 			std::cout << "Received from server: " << answer << std::endl;
